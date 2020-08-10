@@ -1,0 +1,11 @@
+{
+  "name": "baidupan",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.new.js",
+  "scripts": {
+    "test": ""
+  },
+  "author": "",
+  "license": "ISC"
+}
