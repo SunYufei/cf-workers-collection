@@ -1,4 +1,9 @@
+import fs from "fs";
+
 import {BDUSS, STOKEN} from './config.json';
+
+const htmlResponse = {headers: {'content-type': 'text/html; charset=UTF-8'}};
+
 
 addEventListener('fetch', event => {
     event.respondWith(handleRequest(event.request))
@@ -15,10 +20,10 @@ async function handleRequest(request) {
         if (url.includes('download')) {
             return await download(request);
         } else {
-
+            return await generate(request);
         }
     } else {
-        // TODO handle help
+        response = new Response(fs.ReadFile('index.html', 'utf-8'), htmlResponse)
     }
     return response;
 }
@@ -35,7 +40,6 @@ function headerWithRandsk(randsk) {
     }
 }
 
-const htmlResponse = {headers: {'content-type': 'text/html; charset=UTF-8'}};
 
 /**
  * @param {Request} request
