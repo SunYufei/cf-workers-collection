@@ -5,5 +5,5 @@
     - [x] 国内版首页
     - [x] 国际版首页
     - [x] 图片下载
-- [CORS](cors) (forked from [netnr/workers](https://github.com/netnr/workers))
+- [CORS](cors) (modified from [netnr/workers](https://github.com/netnr/workers)) Can be used as proxy.
 - [Notion 自定义域名](notion)

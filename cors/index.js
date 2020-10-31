@@ -4,14 +4,14 @@ addEventListener('fetch', e => {
 
 /**
  * @param {Request} request
- * @returns {Response}
+ * @returns {Promise<Response>}
  */
 async function handleRequest(request) {
     // 请求头，返回对象
     const reqHeaders = new Headers(request.headers);
     let respBody, respContentType;
     let respStatus = 200;
-    let respHeaders = new Headers({
+    const respHeaders = new Headers({
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
         'Access-Control-Allow-Headers': reqHeaders.get('Access-Control-Allow-Headers') || 'Accept, Authorization, Cache-Control, Content-Type, DNT, If-Modified-Since, Keep-Alive, Origin, User-Agent, X-Requested-With, Token, x-access-token'
@@ -31,7 +31,7 @@ async function handleRequest(request) {
                 console.log(url);
             }
             // 构建 fetch 参数
-            let fetchParams = {
+            const fetchParams = {
                 body: null,
                 method: request.method,
                 headers: {}
@@ -55,12 +55,16 @@ async function handleRequest(request) {
                 } else if (contentType.includes('form')) {
                     fetchParams.body = await request.formData();
                 } else {
-                    fetchParams.body = await request.blob();
+                    // fetchParams.body = await request.blob();
+                    fetchParams.body = request.body
                 }
             }
 
             // 发起 fetch
             const response = await fetch(url, fetchParams);
+            for (const header of response.headers) {
+                respHeaders.set(header[0], header[1]);
+            }
             respContentType = response.headers.get('Content-Type');
             respBody = response.body;
         }
